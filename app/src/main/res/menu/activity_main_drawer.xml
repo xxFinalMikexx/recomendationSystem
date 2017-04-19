@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_explore"
+            android:title="Explorar Productos" />
+        <!--<item
+            android:id="@+id/nav_wish"
+            android:title="Lista de deseos" />-->
+        <item
+            android:id="@+id/nav_products"
+            android:title="Mis Productos" />
+        <item
+            android:id="@+id/update_user"
+            android:title="Mi perfil" />
+        <item
+            android:id="@+id/logout"
+            android:title="Logout" />
+    </group>
+</menu>
