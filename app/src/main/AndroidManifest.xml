@@ -24,7 +24,9 @@
         </activity>
         <activity android:name=".ResultsActivity" />
         <activity android:name=".DetailsActivity" />
-        <activity android:name=".SavedResultsActivity"></activity>
+        <activity android:name=".SavedResultsActivity" />
+        <activity android:name=".PrincipalActivity" />
+        <activity android:name=".DetectFacesActivity"></activity>
     </application>
 
 </manifest>
