@@ -9,19 +9,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.places.Places;
+
 import java.io.IOException;
 
-public class DetectFacesActivity extends AppCompatActivity {
+public class DetectFacesActivity extends AppCompatActivity
+        implements OnConnectionFailedListener {
     private static final int GALLERY_REQUEST = 1; // Codigo para identificar la llamada a la aplicación de galeria
     private String rutaImagen;
     private double latitud = 0; // Variable para guardar latitud
     private double longitud = 0; // Variable para guardar longitud
     private Uri uriImagen;
 
+    private String typeLocation;
+
+    private GoogleApiClient mGoogleApiClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detect_faces);
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
 
         fotoPrueba();
     }
@@ -80,5 +97,11 @@ public class DetectFacesActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 }
