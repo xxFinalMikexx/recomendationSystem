@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import static android.provider.ContactsContract.ProviderStatus.STATUS;
@@ -53,6 +54,9 @@ public class DetectFacesActivity extends AppCompatActivity
     private LinkedList jsonVision;
     private Places_Object placeData;
     private Place_Info placeInfo = new Place_Info();
+
+    private HashMap mapNearbyPlaces = new HashMap();
+    private LinkedList listNearbyPlaces = new LinkedList();
 
 
     @Override
@@ -85,11 +89,12 @@ public class DetectFacesActivity extends AppCompatActivity
             if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK && data != null) { // Caso en el que la imagen se escoge de la galeria
 
                 Uri imagenSeleccionada = data.getData(); // Obtener la información de la imagen
-                this.rutaImagen = obtenerRutaRealUri(imagenSeleccionada); // Obtener ruta real de la imagen
+                this.rutaImagen = obtenerRutaRealUri(imagenSeleccionada); // Obtener ruta real de la imagen"
+                Log.e(TAG, "Ruta: " + this.rutaImagen);
 
                 if (tieneCoordenadasImagen(rutaImagen)) {
                     Toast.makeText(DetectFacesActivity.this, "Lat: " + this.latitud + "\nLon " + this.longitud, Toast.LENGTH_LONG).show();
-
+                    Log.e(TAG, "Coordenadas: \n" + this.latitud + "\n" + this.longitud);
                 }
                 else
                     Toast.makeText(DetectFacesActivity.this, "No tiene coordenadas", Toast.LENGTH_LONG).show();
@@ -270,8 +275,23 @@ public class DetectFacesActivity extends AppCompatActivity
     public void parseInformationDetail(JSONObject result) {
         try {
             JSONArray jsonArray = result.getJSONArray("results");
-            for (int i = 0; i < jsonArray.length(); i++) {
+            for (int i = 1; i < jsonArray.length(); i++) {
+                Place_Info actualPlace = new Place_Info();
+
                 JSONObject place = jsonArray.getJSONObject(i);
+                actualPlace.setName(place.getString("name"));
+                actualPlace.setPlaceTypes(place.getJSONArray("types"));
+
+                JSONObject geometry = place.getJSONObject("geometry").getJSONObject("location");
+                LatLng coordinates = new LatLng(geometry.getDouble("latitude"), geometry.getDouble("longitude"));
+                actualPlace.setLatlng(coordinates);
+
+                actualPlace.setPlaceId(place.getString("place_id"));
+                actualPlace.setRating(place.getDouble("rating"));
+
+                mapNearbyPlaces.put(place.getString("place_id"), actualPlace);
+                listNearbyPlaces.addLast(actualPlace);
+                Log.e(TAG, actualPlace.toString());
             }
 
         } catch (Exception e) {
