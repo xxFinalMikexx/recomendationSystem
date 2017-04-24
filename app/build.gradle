@@ -33,7 +33,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support:design:25.0.1'
+    compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.cloud:google-cloud-vision:0.11.0-beta'
+    compile 'com.android.volley:volley:1.0.0'
     testCompile 'junit:junit:4.12'
     compile files('libs/universal-image-loader-1.6.1-with-src.jar')
     compile files('libs/metadata-extractor-2.10.1.jar')
