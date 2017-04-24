@@ -36,6 +36,13 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.cloud:google-cloud-vision:0.11.0-beta'
     compile 'com.android.volley:volley:1.0.0'
+    compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
+        exclude module: 'httpclient'
+    }
+    compile ('com.google.http-client:google-http-client-gson:1.17.0-rc') {
+        exclude module: 'httpclient'
+    }
+    compile 'com.google.apis:google-api-services-vision:v1-rev2-1.21.0'
     testCompile 'junit:junit:4.12'
     compile files('libs/universal-image-loader-1.6.1-with-src.jar')
     compile files('libs/metadata-extractor-2.10.1.jar')
